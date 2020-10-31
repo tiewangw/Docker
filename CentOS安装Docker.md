@@ -51,6 +51,8 @@ yum clean all
 
 ```shell
 yum makecache fast
+# 报错：Cannot find a valid baseurl for repo: base/7/x86_64
+# 解决方法： /root/.bash_profile 中添加代理服务器 export http_proxy=ip:8888
 ```
 
 
@@ -99,6 +101,9 @@ docker run hello-world
 
 ```shell
 docker search mysql
+#报错：Error response from daemon: Get https://registry-1.docker.io/v2/: dial tcp: lookup       registry-1.docker.io on 59.49.49.49:53: dial udp 59.49.49.49:53: connect: network     	   is unreachable
+ 
+#修改 /etc/resolv.conf 把nameserver 改成8.8.8.8
 ```
 
 
