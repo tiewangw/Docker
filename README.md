@@ -10,7 +10,7 @@ Docker源码 ：https://github.com/moby/moby
 
 ​	就是通过对应用组件的封装、分发、部署、运行等生命周期的管理，是用户的APP及其运行环境能够做到“一次封装，到处运行”。
 
-
+![1604493386611](C:\Users\15761\AppData\Roaming\Typora\typora-user-images\1604493386611.png)
 
 #### Docker的基本组成
 
