@@ -6,9 +6,11 @@ Docker源码 ：https://github.com/moby/moby
 
 #### 1 、Docker能干什么
 
-​	Docker的主要目标是**“Build,Ship and Run Any App,Anywhere”**.
+​		Docker的主要目标是**“Build,Ship and Run Any App,Anywhere”**.
 
-​	就是通过对应用组件的封装、分发、部署、运行等生命周期的管理，是用户的APP及其运行环境能够做到“一次封装，到处运行”。
+​		就是通过对应用组件的封装、分发、部署、运行等生命周期的管理，是用户的APP及其运行环境能够做到“一次封装，到处运行”。
+
+​		其核心是有Docker image（Docker 镜像）来支撑的。Docker通过**把应用的运行时环境和应用打包在一起，解决了部署环境依赖的问题**；通过引入**分层文件系统**的概念，**解决了空间利用的问题**。它彻底消除了编译、打包与部署、运维之间的鸿沟，与现在互联网企业推崇的DevOps理念不谋而合，大大提高了应用开发部署的效率。
 
 
 
@@ -132,13 +134,51 @@ docker exec 命令的实现原理就是setns。
 
 
 
+#### 4 、Docker镜像
 
+​			镜像：一种轻量级、可执行的独立软件包，用来打包软件运行环境和基于运行环境开发的软件，它包含运行某个软件所需的所有内容，包括代码、运行时、库、环境变量和配置文件。
 
+##### 			4.1	列出本机的镜像
 
+```shell
+docker images # 列出本地主机上的镜像
+	OPTIONS说明：  -a：列出本地所有的镜像
+				  -q：只显示镜像ID
+				  --digests：显示镜像的摘要信息
+				  --no-trunc：显示完整的镜像信息
+				  --filter"dangling=true"：显示所有“悬挂”镜像，即没有对应名称和tag的镜像
+```
 
+##### 			4.2	创建一个镜像
 
+```shell
+docker pull  # 从镜像仓库下载镜像
 
+docker load  # 一般只导入有docker save导出的镜像。导入后的镜像跟原镜像完全一样，包括镜像ID和分层等内容
 
+docker import # 用于导入包含根文件系统的归档，并将之编程Docker镜像，常用来制作Docker基础镜像。
+docker export # 把一个镜像导出为根文件系统的归档。
+
+docker build  # 通过Dockerfile文件生成镜像
+```
+
+##### 		4.3	搜索镜像
+
+```shell
+# 网站 https://hub.docker.com
+docker search 
+```
+
+##### 		4.4	删除镜像
+
+```shell
+docker rmi -f 镜像ID
+docker rmi -f $(docker images -qa) # 删除全部镜像
+```
+
+##### 		4.5	Docker 镜像生命周期
+
+![1605363214749](C:\Users\15761\AppData\Roaming\Typora\typora-user-images\1605363214749.png)
 
 
 
