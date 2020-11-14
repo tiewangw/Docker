@@ -54,18 +54,18 @@ Docker源码 ：https://github.com/moby/moby
 ​				**setns**可以将进程放到已有的Namespace。
 
 ```
-			docker exec 命令的实现原理就是setns。
+docker exec 命令的实现原理就是setns。
 ```
 
 ​				3.1.2	 目前Linux内核总共实现了6种Namespace：
 
 ```
-		·IPC：隔离System V IPC和POSIX消息队列。
-        ·Network：隔离网络资源。
-        ·Mount：隔离文件系统挂载点。
-        ·PID：隔离进程ID。
-        ·UTS：隔离主机名和域名。
-        ·User：隔离用户ID和组ID
+·IPC：隔离System V IPC和POSIX消息队列。
+·Network：隔离网络资源。
+·Mount：隔离文件系统挂载点。
+·PID：隔离进程ID。
+·UTS：隔离主机名和域名。
+·User：隔离用户ID和组ID
 ```
 
 ###### 					3.1.2.1	**UTS Namespace 隔离主机名和域名**
