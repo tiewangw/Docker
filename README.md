@@ -2,6 +2,8 @@ Docker官网 https://www.docker.com/
 
 Docker源码 ：https://github.com/moby/moby
 
+Docker团队Git： https://github.com/docker
+
 [深入浅出作者NigelPoulton的Github](https://github.com/nigelpoulton)
 
 #### 1 、Docker能干什么
@@ -184,7 +186,17 @@ docker rmi -f $(docker images -qa) # 删除全部镜像
 
 
 
+#### 5、Docker 仓库
 
+​		仓库（repository）用来集中存储Docker镜像，支持镜像分发和更新。
+
+​		Docker官方的公共仓库 https://hub.docker.com/ ，类似Github托管代码。
+
+​		Docker Registry是构建仓库的核心，用于实现开源Docker镜像的分发，Docker Registry源码git：
+
+```
+https://github.com/docker/distribution
+```
 
 
 
