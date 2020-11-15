@@ -1,4 +1,4 @@
-Docker官网 https://www.docker.com/
+Docker官网 ： https://www.docker.com/
 
 Docker源码 ：https://github.com/moby/moby
 
@@ -192,11 +192,9 @@ docker rmi -f $(docker images -qa) # 删除全部镜像
 
 ​		Docker官方的公共仓库 https://hub.docker.com/ ，类似Github托管代码。
 
-​		Docker Registry是构建仓库的核心，用于实现开源Docker镜像的分发，Docker Registry源码git：
+​		Docker Registry是构建仓库的核心，用于实现开源Docker镜像的分发.
 
-```
-https://github.com/docker/distribution
-```
+​		Docker Registry源码git：https://github.com/docker/distribution
 
 
 
