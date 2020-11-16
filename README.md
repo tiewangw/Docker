@@ -136,7 +136,7 @@ docker exec 命令的实现原理就是setns。
 
 
 
-#### 4 、Docker镜像
+#### 4 、[Docker镜像](https://docs.docker.com/engine/reference/commandline/image/)
 
 ​			镜像：一种轻量级、可执行的独立软件包，用来打包软件运行环境和基于运行环境开发的软件，它包含运行某个软件所需的所有内容，包括代码、运行时、库、环境变量和配置文件。
 
@@ -192,13 +192,13 @@ docker rmi -f $(docker images -qa) # 删除全部镜像
 
 ​		5.1	Docker官方的公共仓库 https://hub.docker.com/ ，类似Github托管代码。
 
-​		5.2	Docker Registry是构建仓库的核心，用于实现开源Docker镜像的分发.
+​		5.2	[Docker Registry](https://docs.docker.com/engine/reference/commandline/registry/)是构建仓库的核心，用于实现开源Docker镜像的分发.
 
 ​				  Docker Registry源码：https://github.com/docker/distribution
 
 
 
-#### 6、Docker网路
+#### 6、[Docker网路](https://docs.docker.com/engine/reference/commandline/network/)
 
 ​		Libnetwork项目提供了**容器网路模型（Container Network Model ，简称CNM）**,定义了标准的API用于为容器配置网络，其底层可以适配各种网络驱动。CNM有三个重要概念：
 
