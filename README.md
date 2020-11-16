@@ -190,11 +190,136 @@ docker rmi -f $(docker images -qa) # 删除全部镜像
 
 ​		仓库（repository）用来集中存储Docker镜像，支持镜像分发和更新。
 
-​		Docker官方的公共仓库 https://hub.docker.com/ ，类似Github托管代码。
+​		5.1	Docker官方的公共仓库 https://hub.docker.com/ ，类似Github托管代码。
 
-​		Docker Registry是构建仓库的核心，用于实现开源Docker镜像的分发.
+​		5.2	Docker Registry是构建仓库的核心，用于实现开源Docker镜像的分发.
 
-​		Docker Registry源码git：https://github.com/docker/distribution
+​				  Docker Registry源码：https://github.com/docker/distribution
+
+
+
+#### 6、Docker网路
+
+​		Libnetwork项目提供了**容器网路模型（Container Network Model ，简称CNM）**,定义了标准的API用于为容器配置网络，其底层可以适配各种网络驱动。CNM有三个重要概念：
+
+​		1、**沙盒**。沙盒是一个隔离的网络运行环境，保存了容器网络栈的配置，包括了对网络接口、路由表和DNS配置的管理。在Linux平台上，沙盒是用Linux Network Namespace实现的，在其他平台上可能是不同的概念，如FreeBSD Jail。一个沙盒可以包括来自多个网络的多个Endpoint（端点）。
+
+​		2、**Endpoint**。Endpoint将沙盒加入一个网络，Endpoint的实现可以是一对veth pair或者OVS内部端口，当前的Libnetwork使用的是veth pair。一个Endpoint只能隶属于一个沙盒及一个网络。通过给沙盒增加多个Endpoint可以将一个沙盒加入多个网络。
+​		3、**网络**。网络包括一组能互相通信的Endpoint。网络的实现可以是Linux bridge、vlan等。
+
+![1605535283110](C:\Users\15761\AppData\Roaming\Typora\typora-user-images\1605535283110.png)
+
+
+
+Libnetwork实现了五种驱动（driver）：
+
+| 驱动    |                             特征                             |
+| ------- | :----------------------------------------------------------: |
+| bridge  |                   Docker默认的容器网路驱动                   |
+| host    | 容器与主机共享同一Network Namespace，共享同一套网络协议栈、路由、iptables等 |
+| null    |       容器内网络配置为空，需要手动配置网络接口和路由等       |
+| remote  |                    Docker网络插件的实现。                    |
+| overlay |              Docker原生的跨主机多子网网络方案。              |
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
