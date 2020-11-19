@@ -198,7 +198,7 @@ docker rmi -f $(docker images -qa) # 删除全部镜像
 
 
 
-#### 6、[Docker网路](https://docs.docker.com/network/)
+#### 6、[Docker	网路](https://docs.docker.com/network/)
 
 ​		[docker network 命令](https://docs.docker.com/engine/reference/commandline/network/)
 
@@ -225,27 +225,63 @@ Libnetwork实现了五种驱动（driver）：
 
 
 
+#### 7、[数据卷](https://docs.docker.com/storage/volumes/)
+
+​     	Docker容器里产生的数据，如果不通过docker commit生成新的镜像， 使数据作为镜像的一部分保存下来，就会在容器删除后丢失。为了能够**持久化保存和共享容器的数据**，Docker提出了卷（volume）的概念。
+
+```shell
+docker run -it -v /宿主机目录:/容器内目录 镜像名
+docker run -it -v /宿主机目录:/容器内目录:ro 镜像名 # 以只读的方式挂载一个数据卷
+docker inspect 镜像名  # 查看数卷是否挂载成功
+```
+
+##### 		7.1	**创建数据卷容器： --volume-from 容器之之间共享**
+
+```shell
+# 要创建多个Postgres数据库，并且希望这些数据库之间共享数据，可以先创建一个数据卷容器
+docker create -v /dbdata --name dbdata training/postgres /bin/true
+
+# 启动Postgres数据库服务，使用--volumes-from参数将上面生成的数据卷挂载进来，之后启动多个容器，各个容器# 之间就可以通过dbdata数据卷共享数据了：
+docker run -d --volumes-from dbdata --name db1 training/postgres
+docker run -d --volumes-from dbdata --name db2 training/postgre
+
+#	可以使用--volume-from db1或--volume-from db2的方式挂载dbdata数据卷
+docker run -d --name db3 --volumes-from db1 training/postgres
+```
+
+​		**数据卷的生命周期一直持续到没有容器使用它为止**
+
+​		使用数据卷容器存储的数据不会轻易丢失，
+
+​		即便删除db1、db2容器甚至是初始化该数据卷的dbdata容器，该数据卷也不会被删除。
+
+​		只有在删除最后一个使用该数据卷的容器时显式地指定docker rm–v$CONTAINER才会删除该数据卷。
+
+##### 	7.2	Docker卷管理的问题
+
+​				1）**只支持本地数据卷。**Docker没有办法把远程服务器的数据卷挂载到本机，
+
+​					  对此 Docker引入了卷插件机制，允许使用者以**第三方插件**的形式，提供对分布式存储的支持。
+
+​				2）**缺乏对数据卷生命周期的有效管理**。Docker没有办法对数据卷进行系统管理。
+
+​					 例如 1、无法使用Docker命令查看当前系统的所有数据卷。
+
+​							  2、只有使用docker rm删除最后一个使用数据卷的容器时显式的加上-v参数，才能删除数据卷，否则数据卷永不会被删除，并且Docker将再也无法管理该数据卷。久而久之这些悬挂数据卷浪费大量的空间。
+
+##### 	7.3	卷插件
+
+​				**工作原理**：社区定义了一套**标准的卷插件REST API**，Docker自身实现了这套API的客户端，它会按照步骤发现、激活插件。当Docker需要创建、挂载、卸载、删除数据卷时，它会向插件发送对应的REST API，由插件来真正完成创建数据卷等工作，这就是卷插件的基本原理。
+
+![1605796277197](C:\Users\15761\AppData\Roaming\Typora\typora-user-images\1605796277197.png)
 
 
 
+​		**已有的卷插件**:
 
+​				**·Convoy**：一种基于本地存储的单机版插件，本地支持的存储驱动包括Device Mapper、VFS、EBS等（可将NFS挂载到VFS目录下，实现跨主机存储和共享）。Convoy具有存储备份功能，可以为卷名称设置还原点，并基于还原点恢复数据。由于Convoy是个单机版插件，因此对卷的迁移和共享支持得不是很好。
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+​				**·Flocker**：另外一个功能很强大的卷插件，支持多种后台存储驱动，包括OpenStack Cinder、AWS EBS、EMC ScaleIO、ZFS等。虽然Flocker支持卷的迁移，但不支持卷共享。
 
 
 
