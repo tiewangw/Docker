@@ -289,33 +289,109 @@ docker run -d --name db3 --volumes-from db1 training/postgres
 
 **Docker API种类**
 目前Docker提供如下三类RESTful API：
-·Docker Remote API：诸如docker run等操作最终均是通过调用Docker Remote API向Docker daemon发起请求的。
-·Docker Registry API：与镜像存储有关的操作可通过Docker Registry API来完成。
-·Docker Hub API：用户管理等操作可通过Docker Hub API来完成
+**·Docker Remote API**：诸如docker run等操作最终均是通过调用Docker Remote API向Docker daemon发起请求的。
+
+**·Docker Registry API：**与镜像存储有关的操作可通过Docker Registry API来完成。
+
+·**Docker Hub API**：用户管理等操作可通过Docker Hub API来完成。
 
 
 
+#### 9、Docker 安全
+
+##### 	9.1.1	Docker的安全性
+
+​				 Docker的安全性主要体现在如下几个方面：
+
+​				 1、**Docker容器的安全性：容器是否会威海到host或其他容器**。
+
+​				 2、镜像的安全性：用户如何确保下载的镜像是可信的、未被篡改过的。
+
+​				 3、Docker daemon的安全性：如何确保发送给daemon的命令是由可信用户发起的。
+
+##### 	9.1.2	Docker容器的安全性
+
+​				 **容器安全性问题的根源在于，容器和host共用内核**，没有人能信心满满的地说不可能由容器入侵到host。共用内核的另一个问题是，如果某个容器里的应用导致Linux内核崩溃，那么整个系统都会崩溃。
+
+##### 	9.2 安全策略
+
+###### 			9.2.1 Cgroup
+
+​						Cgroup用于限制容器对CPU、内存等关键资源的使用，防止某个容器由于过度使用资源，导致host或其他容器无法正常运行。
+
+###### 			9.2.2	ulimit
+
+​						Linux系统有一个ulimit指令，可以对一些类型的资源起到限制作用，包括core dump文件的大小，进程数据段的大小，可创建文件的大小，打开文件的数量，CPU时间，单个用户的最大线程数等。
+
+​						Docker 可以设置全局默认的ulimit，例如
+
+```shell
+# 设置CPU时间
+sudo docker daemon --defalut-ulimit cpu=1200
+# 在启动容器时，单独对其ulimit进行设置
+docker run --rm -it --ulimit cpu=1200 ubnutu bash
+```
+
+###### 		9.2.3	容器组网
+
+​					在接入容器隔离不足的情况下，将受信任和不受信任的容器组网在不同的网络中，可以减少危险。
+
+###### 		9.2.4	容器+全虚拟化
+
+​					如果将容器运行在全虚拟化环境中（例如在虚拟机中运行容器），这样就算容器被攻破。也还有虚拟机的保护作用。目前一些安全需求很高的应用场景采用的就是这种方式，比如公有云场景。
+
+###### 		9.2.5	镜像签名
+
+​					Docker可信镜像及升级架构（The Update Framework ，TUF）使得我们可以检验镜像的发布者。
+
+​					当发布者将镜像push到远程的仓库时，Docker会对镜像用私钥进行签名，之后有其他人pull这个镜像的时候，Docker就会用发布者的公钥来校验该镜像是否个发布者所发布的镜像一致，是否被篡改过，是否是最新版。
+
+###### 		9.2.6	日志审计
+
+​					 Docker支持日志驱动，使得用户可以将日志直接从容器输出到如syslogd这样的日志系统，
+
+​					 通过docker --help可以看到Docker daemon支持log-driver，目前支持的类型有none、json-file、syslog、gelf和fluentd，默认的是json-file。
+
+![1605957063188](C:\Users\15761\AppData\Roaming\Typora\typora-user-images\1605957063188.png)
+
+```shell
+# 对单个容器是定驱动
+docker run -it -rm --log-driver="syslog" ubnutu bash
+```
+
+###### 		9.2.7	监控
+
+​					
+
+```shell
+# 查看容器的运行状态（如running、exited、dead等）
+docker ps -a
+```
+
+![1605957348084](C:\Users\15761\AppData\Roaming\Typora\typora-user-images\1605957348084.png)
 
 
 
+**Docker提供了stats命令来实时监控一个容器的资源使用**
+
+![1605957512226](C:\Users\15761\AppData\Roaming\Typora\typora-user-images\1605957512226.png)
 
 
 
+###### 		9.2.8	文件保护系统
 
+​					 Docker可以设置容器的根文件系统为只读模式，只读模式的好处是，即使容器与host使用的是同一个文件系统，也不用担心会影响甚至破坏host的根文件系统。但这里需要注意的是，必须把容器里进程remount文件系统的能力给禁止掉，否则在容器内又可以把文件系统重新挂载为可写。甚至更进一步，用户可以禁止容器挂载任何文件系统。				
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+```shell
+# 示例一：可读写挂载。
+$ docker run -ti --rm ubuntu bash            
+root@4cdf0b0d62ca:/# echo "hello" > /home/test.txt
+root@4cdf0b0d62ca:/# cat /home/test.txt hello
+# 示例二：只读挂载。
+$ docker run -ti --rm --read-only ubuntu bash
+root@a2da6c14ccd4:/#  echo "hello" > /home/test.txt
+bash: /home/test.txt: Read-only file syste
+```
 
 
 
