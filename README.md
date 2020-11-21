@@ -297,7 +297,7 @@ docker run -d --name db3 --volumes-from db1 training/postgres
 
 
 
-#### 9、Docker 安全
+#### 9、[Docker 安全](https://docs.docker.com/engine/security/)
 
 ##### 	9.1.1	Docker的安全性
 
@@ -395,17 +395,41 @@ bash: /home/test.txt: Read-only file syste
 
 
 
+##### 9.3	安全加固
 
+###### 			9.3.1	主机逃逸 
 
+​						主机逃逸实为虚拟机逃逸，主要指利用虚拟软件或虚拟机中运行的软件的漏洞进行攻击，已达到攻击或控制虚拟机宿主机操作系统的目的。
 
+​						[shocker]( https://github.com/gabrtv/shocker.git)攻击就是容器影响host的一个例子。
 
+​						shocker攻击的核心是利用了一个不常见的系统调用：open_by_handle_at。
 
+###### 			9.3.2	安全加固之capability
 
+​						Shocker关键是执行了系统调用open_by_handle_at，这个系统调用需要用到dac_read_search这个			capability，如果去掉这个capability，攻击自然就不奏效了.
 
+```shell
+docker run --rm -ti --cap-add=all --cap-drop=dac_read_search shocker bash 
+docker run --rm -ti shocker bash
+```
 
+​					从capability的使用可以知道，赋予给容器的能力越小，就相对越安全，也就是通常所说的赋予容器必需的最小能力。所以**在启动容器时，强烈建议不要使用--privileged，并且要将不需要的能力尽量都去掉。**
 
+###### 			9.3.3	安全加固之SELinux
 
+​						目前SELinux是效果最好的Docker安全加固手段，
 
+​						若用户的使用环境支持SELinux，**强烈建议用户打开SELinux功能**。
+
+```shell
+# 在启动Docker daemon时打开SELinux。
+sudo docker daemon --selinux-enabled=true
+# 运行Shocker
+docker run --rm -ti --cap-add=all shocker bash
+```
+
+###### 			9.3.4	[安全加固之AppArmor](https://docs.docker.com/engine/security/apparmor/)
 
 
 
