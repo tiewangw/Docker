@@ -285,9 +285,13 @@ docker run -d --name db3 --volumes-from db1 training/postgres
 
 
 
+#### 8、[Docker API](https://docs.docker.com/engine/api/)
 
-
-
+**Docker API种类**
+目前Docker提供如下三类RESTful API：
+·Docker Remote API：诸如docker run等操作最终均是通过调用Docker Remote API向Docker daemon发起请求的。
+·Docker Registry API：与镜像存储有关的操作可通过Docker Registry API来完成。
+·Docker Hub API：用户管理等操作可通过Docker Hub API来完成
 
 
 
