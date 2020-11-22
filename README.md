@@ -14,6 +14,8 @@ Docker团队Git： https://github.com/docker
 
 ​		其核心是有Docker image（Docker 镜像）来支撑的。Docker通过**把应用的运行时环境和应用打包在一起，解决了部署环境依赖的问题**；通过引入**分层文件系统**的概念，**解决了空间利用的问题**。它彻底消除了编译、打包与部署、运维之间的鸿沟，与现在互联网企业推崇的DevOps理念不谋而合，大大提高了应用开发部署的效率。
 
+![1604494124563](https://github.com/tiewangw/Docker/blob/master/images/1604494124563.png)
+
 
 
 ![1604494124563](C:\Users\15761\AppData\Roaming\Typora\typora-user-images\1604494124563.png)
