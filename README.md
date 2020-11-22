@@ -291,7 +291,7 @@ docker run -d --name db3 --volumes-from db1 training/postgres
 目前Docker提供如下三类RESTful API：
 **·Docker Remote API**：诸如docker run等操作最终均是通过调用Docker Remote API向Docker daemon发起请求的。
 
-**·Docker Registry API：**与镜像存储有关的操作可通过Docker Registry API来完成。
+**·Docker Registry API**：与镜像存储有关的操作可通过Docker Registry API来完成。
 
 ·**Docker Hub API**：用户管理等操作可通过Docker Hub API来完成。
 
@@ -359,9 +359,7 @@ docker run --rm -it --ulimit cpu=1200 ubnutu bash
 docker run -it -rm --log-driver="syslog" ubnutu bash
 ```
 
-###### 		9.2.7	监控
-
-​					
+###### 		9.2.7	监控		
 
 ```shell
 # 查看容器的运行状态（如running、exited、dead等）
@@ -433,7 +431,33 @@ docker run --rm -ti --cap-add=all shocker bash
 
 
 
+#### 10、[Libcontainer](https://github.com/docker-archive/libcontainer)
 
+​			**[Docker 中Libcontainer源码](https://github.com/moby/moby/tree/master/vendor/github.com/opencontainers/runc/libcontainer)**
+
+​			Libcontainer作为Docker底层的容器引擎，实现了Docker对容器的最核心需求。Docker所有对容器生命周期进行管理的操作都是通过调用Lincontainer的API来实现的。Docker是建立在引擎之上，更高层面、功能更强大的容器管理工具。
+
+​			Libcontainer作为一个独立的开源项目，跟Docker的耦合性很低。
+
+##### 			Libcontainer的功能：
+
+​					1、运行容器
+
+​					2、暂停/恢复容器
+
+​					3、销毁容器
+
+​					4、向容器发送信号
+
+​					5、获取容器的信息（ID、进程、状态、配置等）
+
+​					6、修改容器配置
+
+​					7、Checkpoint/Restore容器
+
+容器启动过程
+
+![1606024562409](C:\Users\15761\AppData\Roaming\Typora\typora-user-images\1606024562409.png)
 
 
 
