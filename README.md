@@ -477,17 +477,17 @@ docker run --rm -ti --cap-add=all shocker bash
 
 | 指令       | 格式                                                         | 说明                                                         |
 | :--------- | :----------------------------------------------------------- | :----------------------------------------------------------- |
-| FROM       | FROM<image>:<tag>                                            | Dockerfile的第一条必须是FROM指令，用指定要制作的镜像继承自哪个镜像。    可以在Dockerfile中写多个FROM指令来构建复杂的镜像。 |
-| MAINTAINER | MAINTAINER<name>                                             | 用来指定维护者信息                                           |
-| RUN        | RUN<command>或                            RUN["executable","param1","param2"...] | 用来执行shell命令，当解析Dockerfile时，遇到RUN命令，Docker会将该指令翻译为 “/bin/bash-c” |
-| EXPOSE     | EXPOSE<port>[<port>...]                                      | 用来将容器中的端口号暴露出来  也可以通过"docker run -p"实现与服务器端口的映射 |
+| FROM       | FROM<<image>>:<<tag>>                                        | Dockerfile的第一条必须是FROM指令，用指定要制作的镜像继承自哪个镜像。    可以在Dockerfile中写多个FROM指令来构建复杂的镜像。 |
+| MAINTAINER | MAINTAINER<<name>>                                           | 用来指定维护者信息                                           |
+| RUN        | RUN<<command>>或                            RUN["executable","param1","param2"...] | 用来执行shell命令，当解析Dockerfile时，遇到RUN命令，Docker会将该指令翻译为 “/bin/bash-c” |
+| EXPOSE     | EXPOSE <<port>>[<<port>>...]                                 | 用来将容器中的端口号暴露出来  也可以通过"docker run -p"实现与服务器端口的映射 |
 | WORKDIR    | WORKDIR /path/to/workdir                                     | 指定在创建容器后，终端默认登录进来的工作目录                 |
 | CMD        | 1、使用exec执行，推荐方式；CMD["executable","param1","param2"]                               2、在/bin/sh中执行，提供给需要交互的应用 ；                     CMD command param1 param2                                                 3、提供给ENTRYPOINT的默认参数； CMD["param1","param2"] | 指定启动容器时执行的命令。      1、每个Dockerfile只能有一条CMD指令。2、如果指定了多条CMD指令，只有最后一条会被执行。 3、 如果用户启动容器时指定了运行的命令，则会覆盖掉CMD指定的命令。 |
 | ENTRTPOINT | ENTRYPOINT["executable","param1","param2"]     ENTRTPOINT command param1  param2(Shell中执行) | 每个Dockerfile只能有一个ENTRYPOINT,当有多个时，只有最后一个生效。 |
 | VOLUMN     | VOLUMN["/data"]                                              | 创建一个可以从本地主机或其他容器挂载的挂载点，一般用来存放数据库或需要永久保存的数据。                            如果和host共享目录，Dockerfile中必须先创建一个挂载点，然后在启动容器的时候通过“docker run–v$HOSTPATH：$CONTAINERPATH”来挂载，其中CONTAINERPATH就是创建的挂载点。 |
-| ENV        | ENV<key><value>                                              | 指定一个环境变量，会被后续RUN指令使用，并在容器运行时保持。  |
-| ADD        | ADD<src><dest>                                               | 该指令将复制指定的<src>到容器的<dest>。其中<src>可以是Dockerfile所在目录的一个相对路径；也可以时一个URL;还可以时一个tar文件（自动解压为目录） |
-| COPY       | COPY<src><dest>                                              | 复制本地主机的<src>（Dockerfile所在目录的相对路径）到容器的<dest>，当使用本地目录为源目录时，推荐使用COPY. |
+| ENV        | ENV<<key>><<value>>                                          | 指定一个环境变量，会被后续RUN指令使用，并在容器运行时保持。  |
+| ADD        | ADD<<src>><<dest>>                                           | 该指令将复制指定的<<src>>到容器的<<dest>>。其中<<src>>可以是Dockerfile所在目录的一个相对路径；也可以时一个URL;还可以时一个tar文件（自动解压为目录） |
+| COPY       | COPY<<src>><<dest>>                                          | 复制本地主机的<<src>>（Dockerfile所在目录的相对路径）到容器的<<dest>>，当使用本地目录为源目录时，推荐使用COPY. |
 
 
 
