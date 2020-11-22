@@ -477,8 +477,8 @@ docker run --rm -ti --cap-add=all shocker bash
 
 | 指令       | 格式                                                         | 说明                                                         |
 | :--------- | :----------------------------------------------------------- | :----------------------------------------------------------- |
-| FROM       | FROM<<image>>:<<tag>>                                        | Dockerfile的第一条必须是FROM指令，用指定要制作的镜像继承自哪个镜像。    可以在Dockerfile中写多个FROM指令来构建复杂的镜像。 |
-| MAINTAINER | MAINTAINER<<name>>                                           | 用来指定维护者信息                                           |
+| FROM       | FROM< image>:< tag>                                          | Dockerfile的第一条必须是FROM指令，用指定要制作的镜像继承自哪个镜像。    可以在Dockerfile中写多个FROM指令来构建复杂的镜像。 |
+| MAINTAINER | MAINTAINER<< name>>                                          | 用来指定维护者信息                                           |
 | RUN        | RUN<<command>>或                            RUN["executable","param1","param2"...] | 用来执行shell命令，当解析Dockerfile时，遇到RUN命令，Docker会将该指令翻译为 “/bin/bash-c” |
 | EXPOSE     | EXPOSE <<port>>[<<port>>...]                                 | 用来将容器中的端口号暴露出来  也可以通过"docker run -p"实现与服务器端口的映射 |
 | WORKDIR    | WORKDIR /path/to/workdir                                     | 指定在创建容器后，终端默认登录进来的工作目录                 |
