@@ -14,11 +14,7 @@ Docker团队Git： https://github.com/docker
 
 ​		其核心是有Docker image（Docker 镜像）来支撑的。Docker通过**把应用的运行时环境和应用打包在一起，解决了部署环境依赖的问题**；通过引入**分层文件系统**的概念，**解决了空间利用的问题**。它彻底消除了编译、打包与部署、运维之间的鸿沟，与现在互联网企业推崇的DevOps理念不谋而合，大大提高了应用开发部署的效率。
 
-![1604494124563](https://github.com/tiewangw/Docker/blob/master/images/1604494124563.png)
-
-
-
-![1604494124563](C:\Users\15761\AppData\Roaming\Typora\typora-user-images\1604494124563.png)
+![1604494124563](/images/1604494124563.png)
 
 #### 2、Docker的基本组成
 
@@ -180,9 +176,7 @@ docker rmi -f $(docker images -qa) # 删除全部镜像
 
 ##### 		4.5	Docker 镜像生命周期
 
-![1605363214749](https://github.com/tiewangw/Docker/blob/master/images/1605363214749.png)
-
-
+![1605363214749](images\1605363214749.png)
 
 
 
@@ -209,7 +203,7 @@ docker rmi -f $(docker images -qa) # 删除全部镜像
 ​		2、**Endpoint**。Endpoint将沙盒加入一个网络，Endpoint的实现可以是一对veth pair或者OVS内部端口，当前的Libnetwork使用的是veth pair。一个Endpoint只能隶属于一个沙盒及一个网络。通过给沙盒增加多个Endpoint可以将一个沙盒加入多个网络。
 ​		3、**网络**。网络包括一组能互相通信的Endpoint。网络的实现可以是Linux bridge、vlan等。
 
-![1605535283110](https://github.com/tiewangw/Docker/blob/master/images/1605535283110.png)
+![1605535283110](/images/1605535283110.png)
 
 
 
@@ -273,7 +267,7 @@ docker run -d --name db3 --volumes-from db1 training/postgres
 
 ​				**工作原理**：社区定义了一套**标准的卷插件REST API**，Docker自身实现了这套API的客户端，它会按照步骤发现、激活插件。当Docker需要创建、挂载、卸载、删除数据卷时，它会向插件发送对应的REST API，由插件来真正完成创建数据卷等工作，这就是卷插件的基本原理。
 
-![1605796277197](https://github.com/tiewangw/Docker/blob/master/images/1605796277197.png)
+![1605796277197](/images/1605796277197.png)
 
 
 
@@ -352,7 +346,7 @@ docker run --rm -it --ulimit cpu=1200 ubnutu bash
 
 ​					 通过docker --help可以看到Docker daemon支持log-driver，目前支持的类型有none、json-file、syslog、gelf和fluentd，默认的是json-file。
 
-![1605957063188](https://github.com/tiewangw/Docker/blob/master/images/1605957063188.png)
+![1605957063188](/images/1605957063188.png)
 
 ```shell
 # 对单个容器是定驱动
@@ -366,13 +360,13 @@ docker run -it -rm --log-driver="syslog" ubnutu bash
 docker ps -a
 ```
 
-![1605957348084](https://github.com/tiewangw/Docker/blob/master/images/1605957348084.png)
+![1605957348084](/images/1605957348084.png)
 
 
 
 **Docker提供了stats命令来实时监控一个容器的资源使用**
 
-![1605957512226](https://github.com/tiewangw/Docker/blob/master/images/1605957512226.png)
+![1605957512226](/images/1605957512226.png)
 
 
 
@@ -457,7 +451,7 @@ docker run --rm -ti --cap-add=all shocker bash
 
 容器启动过程
 
-![1606024562409](https://github.com/tiewangw/Docker/blob/master/images/1606024562409.png)
+![1606024562409](/images/1606024562409.png)
 
 
 
@@ -504,26 +498,26 @@ RUN  date;sleep 100;date
 CMD  /bin/sh
 ```
 
-![1606052415241](https://github.com/tiewangw/Docker/blob/master/images/1606052415241.png)
+![1606052415241](/images/1606052415241.png)
 
 ```shell
 # build制作镜像
 docker build -t busybox:v1 .
 ```
 
-![1606052118372](https://github.com/tiewangw/Docker/blob/master/images/1606052118372.png)
+![1606052118372](images/1606052118372.png)
 
 ```
 # 通过docker ps 查看docker正在做什么
 ```
 
-![1606051875408](https://github.com/tiewangw/Docker/blob/master/images/1606051875408.png)
+![1606051875408](/images/1606051875408.png)
 
 ```
 查看docker 镜像
 ```
 
-![1606052554283](https://github.com/tiewangw/Docker/blob/master/images/1606052554283.png)
+![1606052554283](/images/1606052554283.png)
 
 
 
