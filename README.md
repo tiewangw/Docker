@@ -1,3 +1,5 @@
+![1606533636523](images\1606533636523.png)
+
 Docker官网 ： https://www.docker.com/
 
 Docker源码 ：https://github.com/moby/moby
@@ -8,6 +10,8 @@ Docker团队Git： https://github.com/docker
 
 #### 1 、Docker能干什么
 
+​		Docker是一个开源的应用容器引擎。
+
 ​		Docker的主要目标是**“Build,Ship and Run Any App,Anywhere”**.
 
 ​		就是通过对应用组件的封装、分发、部署、运行等生命周期的管理，是用户的APP及其运行环境能够做到“一次封装，到处运行”。
@@ -16,13 +20,45 @@ Docker团队Git： https://github.com/docker
 
 ![1604494124563](/images/1604494124563.png)
 
+##### 			   Docker可以解决哪些痛点：
+
+###### 		1、开发人员
+
+​			![1606533946552](images\1606533946552.png)Docker化的应用都运行在独立的虚拟化环境中，天然具有隔离性，不用担心一机多用造成的管理混乱。
+
+​			![1606533946552](images\1606533946552.png)开发人员在多任务开发时，可以并行运行这些应用的Docker容器，每一个Docker应用有一个独立的运行环境，互不干扰。
+
+​			![1606533946552](images\1606533946552.png)开发机器硬件故障，在新开发机器上，重新从Docker仓库下拉开发环境的镜像，一两分钟内就可以重新搭建一套开发环境，并且即便新旧开发硬件和操作系统不一样，重新搭建的开发环境仍能保持和原来的环境一模一样，另外还可以通过Docker把重要变更及时备份到远端。
+
+​			![1606533946552](images\1606533946552.png)Docker的每个复杂软件都可以制作成Docker镜像，分享给大家。
+
+###### 		2、测试人员
+
+​			![1606533946552](images\1606533946552.png)Docker不需要做任何配置，就能保证开发和测试环境完全一致，测试人员只需要关注测绘本身就可以了。
+
+###### 		3、运维人员
+
+​			![1606533946552](images\1606533946552.png)服务具备快速部署能力，扩缩容、版本回退在几秒钟内就可以完成。
+
+​			![1606533946552](images\1606533946552.png)基于同一个Docker镜像部署服务，可以保证每台机器应用完全一致。
+
+​			![1606533946552](images\1606533946552.png)由于Docker应用是虚拟化，多个应用可以混合部署在一台机器上，互不干扰，可以提高机器使用率。
+
+​			![1606533946552](images\1606533946552.png)Docker的应用可以运行在不同硬件和操作系统平台下，在不同的环境自由迁移。
+
+​			![1606533946552](images\1606533946552.png)通过Dockerfile管理Docker镜像，即使系统多次易手、交接文档不全，运维人员也可以快速了解系统是如何搭建的。
+
+​			![1606533946552](images\1606533946552.png)Docker倡导“Build once，Run anywhere”，再烦琐的活儿，只需要做一次，制作成镜像，在任何环境下都可以运行；还可以基于这个镜像做修改，制作新的镜像。
+
 #### 2、Docker的基本组成
 
-​		image：镜像
+|    组成    | 概念 |
+| :--------: | :--: |
+|   Image    | 镜像 |
+| Container  | 容器 |
+| Repository | 仓库 |
 
-​		container：容器
-
-​		repository：仓库
+​		仓库中的应用都是以镜像的形式存在的，把镜像从Docker仓库下拉到本机，以这个镜像为模板启动应用，就叫容器。
 
 #### 3、关于容器技术
 
@@ -136,6 +172,8 @@ docker exec 命令的实现原理就是setns。
 
 ​			镜像：一种轻量级、可执行的独立软件包，用来打包软件运行环境和基于运行环境开发的软件，它包含运行某个软件所需的所有内容，包括代码、运行时、库、环境变量和配置文件。
 
+​			Docker是一个开源的容器引擎相当于Android系统，[Docker仓库](https://hub.docker.com/ )相当于APPstore应用市场，镜像（image）相当于APP, 可以运行在任何装有Docker引擎的操作系统上。
+
 ##### 			4.1	列出本机的镜像
 
 ```shell
@@ -184,13 +222,15 @@ docker rmi -f $(docker images -qa) # 删除全部镜像
 
 ​		仓库（repository）用来集中存储Docker镜像，支持镜像分发和更新。
 
+​		**Docker不仅具有版本控制功能，并且还能够利用分层特性做到增量更新。**
+
 ​		5.1	Docker官方的公共仓库 https://hub.docker.com/ ，类似Github托管代码。
 
 ​		5.2	[Docker Registry](https://docs.docker.com/engine/reference/commandline/registry/)是构建仓库的核心，用于实现开源Docker镜像的分发.
 
 ​				  Docker Registry源码：https://github.com/docker/distribution
 
-
+​		Docker官方的镜像仓库，提供各种各样的应用，当需要某个应用时，就从官方的仓库搜索并下载，个人开发者也可以提交镜像到官方仓库，分享给别人使用。Docker也允许使用第三方的镜像仓库。
 
 #### 6、[Docker	网路](https://docs.docker.com/network/)
 
@@ -268,8 +308,6 @@ docker run -d --name db3 --volumes-from db1 training/postgres
 ​				**工作原理**：社区定义了一套**标准的卷插件REST API**，Docker自身实现了这套API的客户端，它会按照步骤发现、激活插件。当Docker需要创建、挂载、卸载、删除数据卷时，它会向插件发送对应的REST API，由插件来真正完成创建数据卷等工作，这就是卷插件的基本原理。
 
 ![1605796277197](/images/1605796277197.png)
-
-
 
 ​		**已有的卷插件**:
 
