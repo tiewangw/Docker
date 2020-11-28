@@ -214,7 +214,7 @@ docker rmi -f $(docker images -qa) # 删除全部镜像
 
 ##### 		4.5	Docker 镜像生命周期
 
-![1605363214749](images\1605363214749.png)
+![1605363214749](images/1605363214749.png)
 
 
 
@@ -563,7 +563,7 @@ https://github.com/dockerfile
 
 相关文档http://dockerfile.github.io/
 
-![1606528122384](images\1606528122384.png)
+![1606528122384](images/1606528122384.png)
 
 
 
