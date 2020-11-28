@@ -1,4 +1,4 @@
-[官方安装文档](https://docs.docker.com/docker-for-windows/install/)
+[官方文档](https://docs.docker.com/docker-for-windows/install/)
 
 ##### 下载
 
@@ -108,25 +108,42 @@ docker run -d -p 80:80 docker/getting-started
 
 
 
+##### 添加aliyun镜像加速器
+
+![1606561087255](images/1606561087255.png)
 
 
 
+##### 利用Docker搭建个人博客
 
+```shell
+docker run --name db --env MYSQL_ROOT_PASSWORD=example -d mariadb
+docker run --name MyWordPress --link db:mysql -p 8080:80 -d wordpress
+```
 
+![1606562539373](images/1606562539373.png)
 
+![1606562556012](images/1606562556012.png)
 
+浏览器中输入localhost:8080
 
+![1606562602244](images/1606562602244.png)
 
+填写信息
 
+![1606562620665](images/1606562620665.png)
 
+搭建成功
 
+![1606562631851](images/1606562631851.png)
 
+登录
 
+![1606562641077](images/1606562641077.png)
 
+http://localhost:8080/ 查看
 
-
-
-
+![1606563018323](images/1606563018323.png)
 
 
 
