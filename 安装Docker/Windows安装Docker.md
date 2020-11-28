@@ -4,8 +4,6 @@
 
 ![1606554029507](images/1606554029507.png)
 
-
-
 [下载Docker](https://hub.docker.com/editions/community/docker-ce-desktop-windows/?tab=resources)
 
 ![1606553896579](images/1606553896579.png)
@@ -78,31 +76,35 @@ docker:error during connect: Get http://%2F%2F.%2Fpipe%2Fdocker_engine/v1.36/con
 
 ![1606556510645](images/1606556510645.png)
 
-查看docker version
+###### 查看docker version
 
 ![1606556521715](images/1606556521715.png)
 
+添加Container
+
+```shell
+docker run -d -p 80:80 docker/getting-started
+```
+
+![1606559097590](images/1606559097590.png)
 
 
 
+![1606559113373](images/1606559113373.png)
+
+###### localhost查看文档
+
+![1606559119450](images/1606559119450.png)
 
 
 
+###### 运行hello-world
+
+![1606559492813](images/1606559492813.png)
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
+![1606559531052](images/1606559531052.png)
 
 
 
