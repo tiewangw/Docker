@@ -519,11 +519,13 @@ docker build -t busybox:v1 .
 
 ![1606052554283](/images/1606052554283.png)
 
+https://github.com/dockerfile   
 
+​		Docker公司在Github上维护了一个Dockerfile项目 ,该项目为一些常见开源软件服务提供Dockerfile和自动构建方案,根据该工程中的各服务介绍和Dockerfile来快速开发、测试和部署新的应用程序
 
+相关文档http://dockerfile.github.io/
 
-
-
+![1606528122384](images\1606528122384.png)
 
 
 
