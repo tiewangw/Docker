@@ -30,7 +30,7 @@
 
 ![1606554846374](images/1606554846374.png)
 
-问题1：
+error1：
 
 ![1606556717638](images/1606556717638.png)
 
@@ -42,7 +42,11 @@ docker run -d -p 80:80 docker/getting-started
 
 ![1606556348040](images/1606556348040.png)
 
-问题2：
+error2：
+
+```shell
+docker:error during connect: Get http://%2F%2F.%2Fpipe%2Fdocker_engine/v1.36/containers/json: open //./pipe/docker_engine: The system cannot find the file specified. In the default daemon configuration on Windows, the docker client must be run elevated to connect. This error may also indicate that the docker daemon is not running.
+```
 
 ![1606556387168](images/1606556387168.png)
 
