@@ -60,6 +60,16 @@ Docker团队Git： https://github.com/docker
 
 ​		仓库中的应用都是以镜像的形式存在的，把镜像从Docker仓库下拉到本机，以这个镜像为模板启动应用，就叫容器。
 
+###### 		Docker的组织结构
+
+![1606656199872](C:\Users\15761\AppData\Roaming\Typora\typora-user-images\1606656199872.png)
+
+
+
+​				Docker位于操作系统和虚拟容器（lxc或libcontainer）之上，它会通过cgroup、namespaces和lincontainer等系统层面的接口完成资源分配或相互隔离。
+
+![1606656290365](C:\Users\15761\AppData\Roaming\Typora\typora-user-images\1606656290365.png)
+
 #### 3、关于容器技术
 
 ​		容器技术，又称为容器虚拟化，是一种操作系统虚拟化，是一种轻量级的虚拟化技术 。
@@ -72,8 +82,6 @@ Docker团队Git： https://github.com/docker
 ​					·Namespace：访问隔离。
 ​					·rootfs：文件系统隔离。
 ​					·容器引擎：生命周期控制
-
-
 
 ​		容器的核心技术主要包括**Namespace**和**Cgroup**这2个内核特性。
 
@@ -165,6 +173,32 @@ docker exec 命令的实现原理就是setns。
 ###### 				3.2.6	devices子系统
 
 ​							devices子系统用来控制Cgroup的进程对哪些设备有访问权限。
+
+##### 3.3	查看容器信息
+
+```shell
+# 	docker inspcet以JSON的格式展示非常丰富的信息
+docker inspect [OPTIONS] CONTAINER|IMAGE [CONTAINER|IMAGE...]
+```
+
+​	通过“-f”可以使用Golang的模板来提取指定部分的信息
+
+```shell
+# 提取容器的运行状态
+$ docker inspect -f {{.State.Status}} MyWordPress
+running
+```
+
+```shell
+# 提取容器的IP地址：
+$ docker inspect -f {{.NetworkSettings.IPAddress}} MyWordPress
+172.17.0.5
+```
+
+```shell
+# 查询日志。
+docker logs CONTAINER
+```
 
 
 
