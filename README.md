@@ -62,13 +62,13 @@ Docker团队Git： https://github.com/docker
 
 ###### 		Docker的组织结构
 
-![1606656199872](C:\Users\15761\AppData\Roaming\Typora\typora-user-images\1606656199872.png)
+![1606656199872](images/1606656199872.png)
 
 
 
 ​				Docker位于操作系统和虚拟容器（lxc或libcontainer）之上，它会通过cgroup、namespaces和lincontainer等系统层面的接口完成资源分配或相互隔离。
 
-![1606656290365](C:\Users\15761\AppData\Roaming\Typora\typora-user-images\1606656290365.png)
+![1606656290365](images/1606656290365.png)
 
 #### 3、关于容器技术
 
