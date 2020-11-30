@@ -204,11 +204,38 @@ docker logs CONTAINER
 
 #### 4 、[Docker镜像](https://docs.docker.com/engine/reference/commandline/image/)
 
-​			镜像：一种轻量级、可执行的独立软件包，用来打包软件运行环境和基于运行环境开发的软件，它包含运行某个软件所需的所有内容，包括代码、运行时、库、环境变量和配置文件。
+​			镜像：一种轻量级、可执行的独立软件包，用来打包软件运行环境和基于运行环境开发的软件，它包含运行某个软件所需的所有内容，包括代码、运行时、库、环境变量和配置文件。	
 
 ​			Docker是一个开源的容器引擎相当于Android系统，[Docker仓库](https://hub.docker.com/ )相当于APPstore应用市场，镜像（image）相当于APP, 可以运行在任何装有Docker引擎的操作系统上。
 
-##### 			4.1	列出本机的镜像
+##### 4.1	联合文件系统（Union filesystem）
+
+​			UnionFS 是Docker镜像的基础，它将各层文件系统叠加在一起，在用户看来就像一个完整的文件系统。
+
+​			Docker镜像的最底层是bootfs（boot file system），boots主要包括bootloader和kernel。
+
+​			rootfs（root file system）在bootfs之上，包含典型Linux系统的/dev,/proc,/bin,/etc等标准目录和文件。
+
+rootfs就是各种不同的操作系统发行版，如Ubnutu，Centos等.
+
+![1606747004350](images/1606747004350.png)
+
+​			Docker镜像分层特点：**1、已有的分层只能读不能修改，2、上层镜像的优先级高于底层镜像。**
+
+​			分层的好处：**共享资源**
+
+​			比如：有多个镜像都从相同的 base 镜像构建而来，那么宿主机只需在磁盘上保存一份base镜像，
+
+```shell
+# 提交生成新镜像
+docker commit
+# 查看镜像分了多少层，每一层做了什么操作
+docker history
+```
+
+![1606746774592](images/1606746774592.png)
+
+##### 			4.2	列出本机的镜像
 
 ```shell
 docker images # 列出本地主机上的镜像
@@ -219,7 +246,7 @@ docker images # 列出本地主机上的镜像
 				  --filter"dangling=true"：显示所有“悬挂”镜像，即没有对应名称和tag的镜像
 ```
 
-##### 			4.2	创建一个镜像
+##### 			4.3	创建一个镜像
 
 ```shell
 docker pull  # 从镜像仓库下载镜像
@@ -232,21 +259,21 @@ docker export # 把一个镜像导出为根文件系统的归档。
 docker build  # 通过Dockerfile文件生成镜像
 ```
 
-##### 		4.3	搜索镜像
+##### 		4.4	搜索镜像
 
 ```shell
 # 网站 https://hub.docker.com
 docker search 
 ```
 
-##### 		4.4	删除镜像
+##### 		4.5	删除镜像
 
 ```shell
 docker rmi -f 镜像ID
 docker rmi -f $(docker images -qa) # 删除全部镜像
 ```
 
-##### 		4.5	Docker 镜像生命周期
+##### 		4.6	Docker 镜像生命周期
 
 ![1605363214749](images/1605363214749.png)
 
