@@ -298,19 +298,29 @@ docker rmi -f $(docker images -qa) # 删除全部镜像
 ```shell
 # 拉取镜像
 docker run -p 5000:5000 registry
-# 查看端口
+# 查看端口 打开浏览器输入http://{ip_add}:5000/v2/查看
 netstat -ltnp|grep 5000
-# 登录
-docker login
 ```
 
-Docker官方的镜像仓库，提供各种各样的应用，当需要某个应用时，就从官方的仓库搜索并下载，个人开发者也可以提交镜像到官方仓库，分享给别人使用。Docker也允许使用第三方的镜像仓库。
+![1607243371275](images/1607243371275.png)
 
-#### 6、[Docker	网路](https://docs.docker.com/network/)
+#### 6、[Docker网络](https://docs.docker.com/network/)
 
 ​		[docker network 命令](https://docs.docker.com/engine/reference/commandline/network/)
 
-​		Libnetwork项目提供了**容器网路模型（Container Network Model ，简称CNM）**,定义了标准的API用于为容器配置网络，其底层可以适配各种网络驱动。CNM有三个重要概念：
+##### 		6.1	Docker的通信方式
+
+​				  默认情况下，Docker使用网桥(bridge)+NAT的通信模型。
+
+![1607244441701](images/1607244441701.png)
+
+​		当Docker启动容器时，会创建一对veth虚拟网络设备，并将其中一个veth网络设备附加到网桥docker0，另一个加入容器的网络名字空间（network namespace），并改名为eth0。这样，同一个host的容器与容器之间就可以通过docker0通信了。
+
+![1607244737686](images/1607244737686.png)
+
+##### 		6.2	容器网路模型
+
+​				 Libnetwork项目提供了**容器网路模型（Container Network Model ，简称CNM）**,定义了标准的API用于为容器配置网络，其底层可以适配各种网络驱动。CNM有三个重要概念：
 
 ​		1、**沙盒**。沙盒是一个隔离的网络运行环境，保存了容器网络栈的配置，包括了对网络接口、路由表和DNS配置的管理。在Linux平台上，沙盒是用Linux Network Namespace实现的，在其他平台上可能是不同的概念，如FreeBSD Jail。一个沙盒可以包括来自多个网络的多个Endpoint（端点）。
 
@@ -330,6 +340,73 @@ Libnetwork实现了五种驱动（driver）：
 | null    |       容器内网络配置为空，需要手动配置网络接口和路由等       |
 | remote  |                    Docker网络插件的实现。                    |
 | overlay |              Docker原生的跨主机多子网网络方案。              |
+
+```shell
+docker network ls  # 查看local的网络信息
+```
+
+![1607245461107](images/1607245461107.png)
+
+```shell
+# 获取网络信息的元数据
+docker network inspect [OPTIONS] NETWORK [NETWORK...]
+```
+
+```powershell
+root@tie-ubnutu-2004:/home/tie# docker network inspect -v 445b54188d85
+[
+    {
+        "Name": "bridge",
+        "Id": "445b54188d853266dea9a6b1e3a389d4d230b0f7fb561c7620001ce3c6e6b5cf",
+        "Created": "2020-11-30T21:41:04.218315623+08:00",
+        "Scope": "local",
+        "Driver": "bridge",
+        "EnableIPv6": false,
+        "IPAM": {
+            "Driver": "default",
+            "Options": null,
+            "Config": [
+                {
+                    "Subnet": "172.17.0.0/16",
+                    "Gateway": "172.17.0.1"
+                }
+            ]
+        },
+        "Internal": false,
+        "Attachable": false,
+        "Ingress": false,
+        "ConfigFrom": {
+            "Network": ""
+        },
+        "ConfigOnly": false,
+        "Containers": {
+            "08e4ddf1f65689bcdaa4e11c127ece7f330c3a296c98e42dc97b32353026ec06": {
+                "Name": "affectionate_wozniak",
+                "EndpointID": "03a8ce1cfde575ac4614eb1eac1ee964254cd88adace450734708408f6de7304",
+                "MacAddress": "02:42:ac:11:00:03",
+                "IPv4Address": "172.17.0.3/16",
+                "IPv6Address": ""
+            },
+            "bf422e69de710f3b21aca5be6ba6740620c2a9b818ee8be74a2429292b7901e4": {
+                "Name": "db",
+                "EndpointID": "0f2a16dc2294cb5b91b918d7f754c2f51618255c370d822c8bcacfc89396a35c",
+                "MacAddress": "02:42:ac:11:00:02",
+                "IPv4Address": "172.17.0.2/16",
+                "IPv6Address": ""
+            }
+        },
+        "Options": {
+            "com.docker.network.bridge.default_bridge": "true",
+            "com.docker.network.bridge.enable_icc": "true",
+            "com.docker.network.bridge.enable_ip_masquerade": "true",
+            "com.docker.network.bridge.host_binding_ipv4": "0.0.0.0",
+            "com.docker.network.bridge.name": "docker0",
+            "com.docker.network.driver.mtu": "1500"
+        },
+        "Labels": {}
+    }
+]
+```
 
 
 
