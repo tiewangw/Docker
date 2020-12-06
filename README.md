@@ -287,11 +287,24 @@ docker rmi -f $(docker images -qa) # 删除全部镜像
 
 ​		5.1	Docker官方的公共仓库 https://hub.docker.com/ ，类似Github托管代码。
 
-​		5.2	[Docker Registry](https://docs.docker.com/engine/reference/commandline/registry/)是构建仓库的核心，用于实现开源Docker镜像的分发.
+​		5.2	[Docker Registry](https://docs.docker.com/registry/)是构建仓库的核心，用于实现开源Docker镜像的分发.
 
 ​				  Docker Registry源码：https://github.com/docker/distribution
 
-​		Docker官方的镜像仓库，提供各种各样的应用，当需要某个应用时，就从官方的仓库搜索并下载，个人开发者也可以提交镜像到官方仓库，分享给别人使用。Docker也允许使用第三方的镜像仓库。
+​				 [Docker registry Command](https://docs.docker.com/engine/reference/commandline/registry/)
+
+​		5.3	构建私有仓库
+
+```shell
+# 拉取镜像
+docker run -p 5000:5000 registry
+# 查看端口
+netstat -ltnp|grep 5000
+# 登录
+docker login
+```
+
+Docker官方的镜像仓库，提供各种各样的应用，当需要某个应用时，就从官方的仓库搜索并下载，个人开发者也可以提交镜像到官方仓库，分享给别人使用。Docker也允许使用第三方的镜像仓库。
 
 #### 6、[Docker	网路](https://docs.docker.com/network/)
 
