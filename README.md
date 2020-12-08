@@ -442,7 +442,17 @@ docker run -d --name db3 --volumes-from db1 training/postgres
 
 ​		只有在删除最后一个使用该数据卷的容器时显式地指定docker rm–v$CONTAINER才会删除该数据卷。
 
-##### 	7.2	Docker卷管理的问题
+##### 	7.2	备份恢复数据卷
+
+```shell
+# 备份
+docker run --volumes-from dbdata -v $(pwd):/backup ubuntu tar cvf /backup/backup.tar /dbdata
+
+# 恢复到新容器
+docker run --volumes-from dbdata2 -v $(pwd):backup busybox tar xvf /back/backup.tar 
+```
+
+##### 	7.3	Docker卷管理的问题
 
 ​				1）**只支持本地数据卷。**Docker没有办法把远程服务器的数据卷挂载到本机，
 
@@ -454,7 +464,7 @@ docker run -d --name db3 --volumes-from db1 training/postgres
 
 ​							  2、只有使用docker rm删除最后一个使用数据卷的容器时显式的加上-v参数，才能删除数据卷，否则数据卷永不会被删除，并且Docker将再也无法管理该数据卷。久而久之这些悬挂数据卷浪费大量的空间。
 
-##### 	7.3	卷插件
+##### 	7.4	卷插件
 
 ​				**工作原理**：社区定义了一套**标准的卷插件REST API**，Docker自身实现了这套API的客户端，它会按照步骤发现、激活插件。当Docker需要创建、挂载、卸载、删除数据卷时，它会向插件发送对应的REST API，由插件来真正完成创建数据卷等工作，这就是卷插件的基本原理。
 
